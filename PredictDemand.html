@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Predict Demand - Babcock Cafeteria</title>
+  <link rel="stylesheet" href="css/PredictDemand.css">
+  <style>
+    /* ── Button fix ───────────────────────────────────── */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .btn-row {
+      margin-top: 24px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      padding: 12px 32px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+
+    .btn:active { transform: scale(0.97); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: var(--secondary, #d4b635);
+      color: #0f172a;
+    }
+
+    /* ── Locked section ──────────────────────────────── */
+    .locked-section {
+      position: relative;
+      pointer-events: none;
+      opacity: 0.45;
+      filter: grayscale(0.3);
+      transition: opacity 0.4s, filter 0.4s;
+    }
+
+    .locked-section.unlocked {
+      pointer-events: auto;
+      opacity: 1;
+      filter: none;
+    }
+
+    .lock-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      border-radius: inherit;
+      background: rgba(255,255,255,0.45);
+      backdrop-filter: blur(1px);
+    }
+
+    .lock-overlay.hidden { display: none; }
+
+    .lock-pill {
+      background: #f1f5f9;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 999px;
+      padding: 10px 22px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .retrain-banner {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      background: #f0fdf4;
+      border: 1.5px solid #bbf7d0;
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-size: 14px;
+      color: #166534;
+      margin-top: 16px;
+    }
+
+    .retrain-banner.show { display: flex; }
+
+    /* ── Status messages ──────────────────────────────── */
+    .form-msg {
+      font-size: 13px;
+      margin-top: 8px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .form-msg.error   { background:#fef2f2; color:#dc2626; display:block; }
+    .form-msg.success { background:#f0fdf4; color:#16a34a; display:block; }
+    .form-msg.loading { background:#eff6ff; color:#2563eb; display:block; }
+
+    /* ── Prediction results panel ────────────────────── */
+    .prediction-results {
+      display: none;  /* hidden until .show is added */
+    }
+    .prediction-results.show {
+      display: block !important;
+    }
+
+
+  </style>
+</head>
+
+<body style="background: #fff; color: #0f172a">
+  <div class="app">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo" aria-hidden>
+          <img src="images/babcock-university-logo.jpg" alt="Babcock University Logo" />
+        </div>
+        <h2>
+          AI Food Management<br /><span style="color: var(--secondary)">Admin Console</span>
+        </h2>
+      </div>
+      <nav>
+        <a href="Dashboard.html"><img class="icon" src="images/dashboard.svg" alt="dashboard" /> Dashboard</a>
+        <a href="PredictDemand.html" class="active"><img class="icon" src="images/predict.svg" alt="predict" /> Predict Demand</a>
+        <a href="Reports.html"><img class="icon" src="images/reports.svg" alt="reports" /> View Reports</a>
+        <a href="#"><img class="icon" src="images/data.svg" alt="data" /> Manage Data</a>
+        <a href="Profile.html"><img class="icon" src="images/profile.svg" alt="profile" /> Profile</a>
+      </nav>
+      <div class="profile">
+        <div class="user">
+          <img id="sidebar-avatar" src="images/profile.svg" alt="Admin Profile" style="
+            width: 40px; height: 40px; border-radius: 999px;
+            border: 2px solid var(--secondary); background: #fff; object-fit: cover;" />
+          <div>
+            <div id="sidebar-name" style="font-weight: 700; font-size: 12px"></div>
+            <div id="sidebar-department" style="
+              font-size: 10px; color: rgba(255,255,255,0.7);
+              text-transform: uppercase; letter-spacing: 0.08em;"></div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main>
+      <header>
+        <div>
+          <h1 style="margin: 0; color: var(--primary); font-size: 20px">Meal Prediction System</h1>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px">
+          <button id="logout-btn"
+            style="background: var(--primary); color:#fff; border:none; border-radius:8px;
+                   padding:10px 20px; font-weight:600; font-size:15px; cursor:pointer;">
+            Sign Out
+          </button>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="page-header">
+          <p>AI-Powered Cafeteria Demand Forecasting</p>
+        </div>
+
+        <!-- ═══ SECTION 1: Pre-Meal Prediction ═══════════════════════════════ -->
+        <div class="card" id="section1">
+          <div class="section-header">
+            <div class="section-badge">1</div>
+            <div>
+              <div class="section-title">Pre-Meal Prediction</div>
+              <div class="section-desc">Generate AI predictions before meal service</div>
+            </div>
+          </div>
+
+          <form id="predictionForm">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="date">Date</label>
+                <input type="date" id="date" required />
+              </div>
+
+              <div class="form-group">
+                <label for="dayOfWeek">Day of Week</label>
+                <!-- Read-only: auto-filled from the date picker above -->
+                <input type="text" id="dayOfWeek" readonly
+                  style="background:#f1f5f9; cursor:not-allowed; color:#475569;"
+                  placeholder="Auto-filled from date" required />
+              </div>
+
+              <div class="form-group">
+                <label>Meal Type</label>
+                <div class="radio-group">
+                  <label class="radio-label">
+                    <input type="radio" name="mealType" value="Breakfast" checked /> Breakfast
+                  </label>
+                  <label class="radio-label">
+                    <input type="radio" name="mealType" value="Lunch" /> Lunch
+                  </label>
+                  <label class="radio-label">
+                    <input type="radio" name="mealType" value="Supper" /> Supper
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="foodItem">Food Item</label>
+                <select id="foodItem" required>
+                  <option value="">Select food item</option>
+                  <!-- Populated dynamically from /api/predict/options -->
+                </select>
+              </div>
+
+            </div>
+
+            <!-- Button sits BELOW the grid, right-aligned -->
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary" id="predictBtn">
+                ✨ Generate Prediction
+              </button>
+            </div>
+          </form>
+
+          <div id="predictMsg" class="form-msg"></div>
+
+          <!-- Results panel (hidden until prediction runs) -->
+          <div class="prediction-results" id="predictionResults" style="margin-top:24px;">
+            <div style="font-size:1.1rem; font-weight:700; margin-bottom:1rem; color: var(--primary); text-align:center;">
+              📊 AI Prediction Results
+            </div>
+            <div style="
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              text-align: center;
+              padding: 36px 20px;
+              background: #f8fafc;
+              border-radius: 14px;
+              border: 2px solid #e2e8f0;
+            ">
+              <div style="font-size:13px; font-weight:600; color:#64748b; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:12px;">
+                Expected Students
+              </div>
+              <div id="predictedStudents" style="
+                font-size: 72px;
+                font-weight: 900;
+                color: var(--primary);
+                line-height: 1;
+                margin-bottom: 14px;
+                width: 100%;
+                text-align: center;
+              ">--</div>
+              <span style="
+                background: #dcfce7;
+                color: #166534;
+                font-size: 12px;
+                font-weight: 700;
+                padding: 4px 16px;
+                border-radius: 999px;
+                letter-spacing: 0.04em;
+              ">Predicted</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- ═══ SECTION 2: Post-Meal Actuals ════════════════════════════════ -->
+        <div class="card locked-section" id="section2">
+          <!-- Lock overlay — hidden once Section 1 prediction is generated -->
+          <div class="lock-overlay" id="section2-lock">
+            <div class="lock-pill">
+              🔒 Complete Section 1 prediction first
+            </div>
+          </div>
+          <div class="section-header">
+            <div class="section-badge" style="background: linear-gradient(135deg, var(--secondary), #d4b635);">2</div>
+            <div>
+              <div class="section-title">Post-Meal Actuals</div>
+              <div class="section-desc">Record actual outcomes — updates the dataset & retrains the AI model</div>
+            </div>
+          </div>
+
+          <form id="actualsForm">
+            <div class="form-group" style="max-width: 400px;">
+              <label for="actualStudents">Actual Students Served</label>
+              <input type="number" id="actualStudents" placeholder="e.g. 2450" min="0" required />
+            </div>
+
+            <div class="btn-row" style="margin-top: 24px;">
+              <button type="submit" class="btn btn-secondary" id="saveActualsBtn">
+                💾 Save
+              </button>
+            </div>
+          </form>
+
+          <div id="actualsMsg" class="form-msg"></div>
+
+          <!-- Retrain success banner -->
+          <div class="retrain-banner" id="retrainBanner">
+            🔄 <strong>Saved successfully!</strong>;
+            <span id="retrainMetrics" style="margin-left:8px; font-size:12px; color:#166534;"></span>
+          </div>
+        </div>
+
+        <div class="timestamp" id="timestamp"></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Logout Modal -->
+  <div id="logout-modal-overlay" class="modal-overlay">
+    <div class="logout-modal">
+      <div style="font-size: 40px; margin-bottom: 16px;">👋</div>
+      <h3>Ready to Leave?</h3>
+      <p>Are you sure you want to sign out of your administrative account?</p>
+      <div class="modal-buttons">
+        <button class="btn-logout-cancel" id="cancel-logout">Stay Logged In</button>
+        <button class="btn-logout-confirm" id="confirm-logout">Yes, Sign Out</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/PredictDemand.js"></script>
+</body>
+</html>

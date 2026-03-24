@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Profile Settings | AI Food Management System</title>
+    <link rel="stylesheet" href="css/Profile.css">
+</head>
+
+<body style="background: #fff; color: #0f172a">
+    <div class="app">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo" aria-hidden>
+                    <img src="images/babcock-university-logo.jpg" alt="Babcock University Logo" />
+                </div>
+                <h2>
+                    AI Food Management<br /><span style="color: var(--secondary)">Admin Console</span>
+                </h2>
+            </div>
+            <nav>
+                <a href="Dashboard.html" title="Dashboard">
+                    <img class="icon" src="images/dashboard.svg" alt="dashboard" /> Dashboard
+                </a>
+                <a href="PredictDemand.html" title="Predict Demand">
+                    <img class="icon" src="images/predict.svg" alt="predict" /> Predict Demand
+                </a>
+                <a href="Reports.html" title="View Reports">
+                    <img class="icon" src="images/reports.svg" alt="reports" /> View Reports
+                </a>
+                <a href="#" title="Manage Data">
+                    <img class="icon" src="images/data.svg" alt="data" /> Manage Data
+                </a>
+                <a href="#" class="active" title="Profile">
+                    <img class="icon" src="images/profile.svg" alt="profile" /> Profile
+                </a>
+            </nav>
+            <div class="profile">
+                <div class="user">
+                    <img id="sidebar-avatar" src="images/profile.svg" alt="Admin Profile"
+                        style="width: 40px; height: 40px; border-radius: 999px; border: 2px solid var(--secondary); background: #fff; object-fit: cover;" />
+                    <div>
+                        <div id="sidebar-name" style="font-weight: 700; font-size: 12px"></div>
+                        <div id="sidebar-department"
+                            style="font-size: 10px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.08em;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Content Area -->
+            <div class="content">
+                <div
+                    style="margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+                    <div>
+                        <h2 style="margin-bottom: 2px;">Profile Settings</h2>
+                        <p class="header-subtitle">Manage your administrative account details</p>
+                        <div id="statusMessage" class="status-message hidden" aria-live="polite"></div>
+                    </div>
+                    <button id="logout-btn"
+                        style="background: var(--primary); color: #fff; border: none; border-radius: 8px; padding: 10px 20px; font-weight: 600; font-size: 15px; cursor: pointer;">Sign
+                        Out</button>
+                </div>
+
+                <!-- Profile Picture Section -->
+                <div class="form-section">
+                    <form style="display: block" id="profile-pic-form">
+                        <div class="profile-pic-section">
+                            <div class="profile-pic-container">
+                                <img id="profile-preview" src="images/profile.svg" alt="Admin Profile" />
+                                <label class="profile-pic-upload" title="Upload Profile Picture">
+                                    <span style="font-size: 24px; font-weight: bold">+</span>
+                                    <input type="file" id="pfp-upload" accept="image/*" />
+                                </label>
+                            </div>
+                            <div class="profile-info">
+                                <h3>Admin Profile Picture</h3>
+                                <p>Update your photo for identification across the system. Recommended size: 500x500px.
+                                </p>
+                                <div style="display: flex; gap: 12px; margin-top: 16px">
+                                    <button class="btn-secondary" type="button" id="remove-photo">Remove Photo</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Personal Information Section -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <h3>Personal Information</h3>
+                    </div>
+                    <form style="display: block" id="profile-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="fullname">Full Name</label>
+                                <input type="text" id="fullname" placeholder="Enter your full name" />
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" placeholder="your@email.com" />
+                            </div>
+                            <div class="form-group">
+                                <label for="department">Department</label>
+                                <select id="department">
+                                    <option value="">Select Department</option>
+                                    <option value="food-management">Food Management</option>
+                                    <option value="administration">Administration</option>
+                                    <option value="nutrition">Nutrition &amp; Health</option>
+                                    <option value="catering">Catering Services</option>
+                                    <option value="inventory">Inventory Management</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="role">Admin Role</label>
+                                <select id="role" disabled style="opacity: 0.75; cursor: not-allowed">
+                                    <option selected>Super Administrator</option>
+                                    <option>Cafeteria Manager</option>
+                                    <option>Standard Admin</option>
+                                </select>
+                                <small style="font-size: 10px; color: #64748b; margin-top: 4px; display: block;">Role
+                                    can only be
+                                    changed by IT Support.</small>
+                            </div>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:12px;">
+                            <button type="submit" class="btn-primary" style="margin-top: 0; width: auto;">Save Profile
+                                Changes</button>
+                            <div id="profileInlineStatus" class="inline-status hidden" aria-live="polite"></div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Security Section -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <h3>Security & Password</h3>
+                    </div>
+                    <form style="display: block" id="password-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="current-password">Current Password</label>
+                                <input type="password" id="current-password"
+                                    placeholder="Enter your current password" />
+                            </div>
+                            <div class="form-group">
+                                <label for="new-password">New Password</label>
+                                <input type="password" id="new-password" placeholder="Enter new password" />
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm-password">Confirm New Password</label>
+                                <input type="password" id="confirm-password" placeholder="Confirm new password" />
+                            </div>
+                        </div>
+                        <div
+                            style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 12px; margin-top: 16px; font-size: 13px; color: #856404;">
+                            ℹ️ Password should be at least 8 characters long and include uppercase, lowercase, numbers,
+                            and special
+                            characters.
+                        </div>
+                        <div style="display:flex; align-items:center; gap:12px; margin-top:12px;">
+                            <button type="submit" class="btn-primary" style="margin-top: 0; width: auto;">Update
+                                Password</button>
+                            <div id="passwordInlineStatus" class="inline-status hidden" aria-live="polite"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logout-modal-overlay" class="modal-overlay">
+        <div class="logout-modal">
+            <div style="font-size: 40px; margin-bottom: 16px;">👋</div>
+            <h3>Ready to Leave?</h3>
+            <p>Are you sure you want to sign out of your administrative account?</p>
+            <div class="modal-buttons">
+                <button class="btn-logout-cancel" id="cancel-logout">Stay Logged In</button>
+                <button class="btn-logout-confirm" id="confirm-logout">Yes, Sign Out</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/Profile.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard | Babcock University AI Food Management</title>
+    <style>
+        :root {
+            --primary: #00408c;
+            --secondary: #c5a021;
+            --bg: #ffffff;
+            --sidebar-width: 16rem;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family:
+                system-ui,
+                -apple-system,
+                "Segoe UI",
+                Roboto,
+                "Helvetica Neue",
+                Arial;
+            background: var(--bg);
+            color: #0f172a;
+        }
+
+        .app {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        aside.sidebar {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            width: var(--sidebar-width);
+            background: var(--primary);
+            color: #fff;
+            padding: 28px 20px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            overflow: auto;
+            z-index: 30;
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .logo {
+            width: 96px;
+            height: 96px;
+            background: #fff;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .logo img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .brand h2 {
+            margin: 12px 0 0;
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-align: center;
+        }
+
+        nav {
+            margin-top: 18px;
+            flex: 1;
+        }
+
+        nav a {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            padding: 10px 14px;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(4px);
+        }
+
+        nav a.active {
+            background: rgba(255, 255, 255, 0.06);
+            border-right: 4px solid var(--secondary);
+            font-weight: 600;
+        }
+
+        nav img.icon {
+            width: 22px;
+            height: 22px;
+            filter: brightness(0) invert(1);
+        }
+
+        .profile {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 16px;
+        }
+
+        .profile .user {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.07);
+            padding: 8px;
+            border-radius: 12px;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin-left: var(--sidebar-width);
+        }
+
+        header {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 36px;
+            border-bottom: 1px solid #e0e7ff;
+            background: #fff;
+        }
+
+        .content {
+            padding: 28px;
+            overflow: auto;
+        }
+
+        .welcome-section {
+            background: linear-gradient(135deg, var(--primary) 0%, #003070 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 18px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .welcome-section h2 {
+            margin: 0 0 12px 0;
+            font-size: 36px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .welcome-section p {
+            margin: 0;
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .features-section {
+            background: white;
+            border: 1px solid #e0e7ff;
+            border-radius: 18px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .features-section h3 {
+            color: var(--primary);
+            font-size: 20px;
+            margin: 0 0 24px 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: #f8fafc;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #e6f2ff;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0, 64, 140, 0.1);
+            background: #f0f9ff;
+        }
+
+        .feature-card h4 {
+            color: var(--primary);
+            margin: 12px 0 8px 0;
+            font-size: 16px;
+        }
+
+        .feature-card p {
+            margin: 0;
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 18px;
+            border: 1px solid #e0e7ff;
+            box-shadow: 0 1px 4px rgba(16, 24, 40, 0.02);
+        }
+
+        .metric-card h3 {
+            margin: 8px 0 0;
+            font-size: 32px;
+            color: var(--primary);
+        }
+
+        .small {
+            font-size: 11px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-top: 4px;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .chart {
+            height: 200px;
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+            padding: 10px 0;
+        }
+
+        footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e7ff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .logout-modal {
+            background: #fff;
+            padding: 24px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: scale(0.9);
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active .logout-modal {
+            transform: scale(1);
+        }
+
+        .logout-modal h3 {
+            margin-bottom: 8px;
+            color: #1e293b;
+        }
+
+        .logout-modal p {
+            color: #64748b;
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .btn-logout-confirm {
+            background: #b91c1c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-logout-confirm:hover {
+            background: #991b1b;
+        }
+
+        .btn-logout-cancel {
+            background: #f1f5f9;
+            color: #475569;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-logout-cancel:hover {
+            background: #e2e8f0;
+        }
+
+        @media (max-width: 900px) {
+            main {
+                margin-left: 0;
+                margin-top: 64px;
+            }
+
+            aside.sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 64px;
+                width: 100%;
+                flex-direction: row;
+                padding: 8px 12px;
+                align-items: center;
+            }
+
+            .brand {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin: 0;
+            }
+
+            .logo {
+                width: 40px;
+                height: 40px;
+            }
+
+            .logo img {
+                width: 32px;
+                height: 32px;
+            }
+
+            .brand h2 {
+                display: none;
+            }
+
+            nav {
+                margin-top: 0;
+                margin-left: 20px;
+                display: flex;
+                gap: 4px;
+                overflow: auto;
+            }
+
+            nav a {
+                margin-bottom: 0;
+                padding: 6px 10px;
+                font-size: 13px;
+                white-space: nowrap;
+            }
+
+            nav a.active {
+                border-right: none;
+                border-bottom: 3px solid var(--secondary);
+                border-radius: 0;
+            }
+
+            nav img.icon {
+                width: 18px;
+                height: 18px;
+            }
+
+            .profile {
+                display: none;
+            }
+
+            header {
+                padding: 0 16px;
+                height: 60px;
+            }
+
+            .content {
+                padding: 16px;
+            }
+
+            .welcome-section {
+                padding: 30px 20px;
+            }
+
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo">
+                    <img src="images/babcock-university-logo.jpg" alt="Babcock University Logo" />
+                </div>
+                <h2>AI Food Management<br /><span style="color: var(--secondary)">Admin Console</span></h2>
+            </div>
+            <nav>
+                <a href="Dashboard.html" class="active">
+                    <img class="icon" src="images/dashboard.svg" alt="dashboard" /> Dashboard
+                </a>
+                <a href="PredictDemand.html">
+                    <img class="icon" src="images/predict.svg" alt="predict" /> Predict Demand
+                </a>
+                <a href="Reports.html">
+                    <img class="icon" src="images/reports.svg" alt="reports" /> View Reports
+                </a>
+                <a href="#">
+                    <img class="icon" src="images/data.svg" alt="data" /> Manage Data
+                </a>
+                <a href="Profile.html">
+                    <img class="icon" src="images/profile.svg" alt="profile" /> Profile
+                </a>
+            </nav>
+            <div class="profile">
+                <div class="user">
+                    <img id="sidebar-avatar" src="images/profile.svg" alt="Admin Profile"
+                        style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--secondary); background: #fff; object-fit: cover;" />
+                    <div>
+                        <div id="sidebar-name" style="font-weight: 700; font-size: 12px"></div>
+                        <div id="sidebar-department"
+                            style="font-size: 10px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.08em;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main>
+            <header>
+                <div>
+                    <h1 style="margin: 0; color: var(--primary); font-size: 20px">Admin Dashboard</h1>
+                </div>
+                <div style="display: flex; align-items: center; gap: 16px">
+                    <button id="logout-btn"
+                        style="background: var(--primary); color: #fff; border: none; border-radius: 8px; padding: 10px 20px; font-weight: 600; font-size: 15px; cursor: pointer;">Sign
+                        Out</button>
+                </div>
+            </header>
+
+            <div class="content">
+                <!-- Welcome Section -->
+                <div class="welcome-section">
+                    <h2>Welcome to Your Dashboard</h2>
+                    <p>AI-Powered Food Management System for Babcock University</p>
+                </div>
+
+                <!-- Features Section -->
+                <div class="features-section">
+                    <h3>What You Can Do</h3>
+                    <div class="features-grid">
+                        <div class="feature-card" onclick="location.href='PredictDemand.html'">
+                            <span style="font-size: 32px;">📊</span>
+                            <h4>Predict Demand</h4>
+                            <p>Use AI to forecast meal requirements based on historical data and patterns</p>
+                        </div>
+                        <div class="feature-card" onclick="location.href='Reports.html'">
+                            <span style="font-size: 32px;">📝</span>
+                            <h4>View Reports</h4>
+                            <p>Access comprehensive analytics about food consumption and trends</p>
+                        </div>
+                        <div class="feature-card" onclick="location.href='#'">
+                            <span style="font-size: 32px;">🗄️</span>
+                            <h4>Manage Data</h4>
+                            <p>Organize and update meal information, quantities, and inventory</p>
+                        </div>
+                        <div class="feature-card" onclick="location.href='Profile.html'">
+                            <span style="font-size: 32px;">⚙️</span>
+                            <h4>Profile Settings</h4>
+                            <p>Manage your account preferences and security settings</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Metrics Section -->
+                <div class="features-section">
+                    <h3>Today's Metrics</h3>
+                    <div class="metrics-grid">
+                        <div class="card metric-card">
+                            <div style="background: #f0f9ff; padding: 10px; border-radius: 12px; width: fit-content;">
+                                🍽️</div>
+                            <p class="small">Total Meals Predicted (All Time)</p>
+                            <h3 id="metricTotalPredicted">—</h3>
+                            <div id="metricTotalSub" style="margin-top: 8px; color: #94a3b8; font-weight: 600">
+                                Loading...
+                            </div>
+                        </div>
+                        <div class="card metric-card">
+                            <div style="background: #f0f9ff; padding: 10px; border-radius: 12px; width: fit-content;">👥</div>
+                            <p class="small">Avg. Expected Students</p>
+                            <h3 id="metricAvgStudents">—</h3>
+                            <div id="metricAvgSub" style="margin-top: 8px; color: #64748b">Based on full dataset</div>
+                        </div>
+                        <div class="card metric-card">
+                            <div style="background: #f0f9ff; padding: 10px; border-radius: 12px; width: fit-content;">🏆</div>
+                            <p class="small">Most Predicted Food</p>
+                            <h3 id="metricTopFood" style="font-size: 18px; margin-top: 8px;">—</h3>
+                            <div id="metricTopFoodSub" style="margin-top: 8px; color: #64748b">Highest demand item</div>
+                        </div>
+                    </div>
+
+                    <div class="two-col">
+                        <div class="card">
+                            <h4 style="margin: 0; color: var(--primary)">Past 7 Days Food Demand</h4>
+                            <p class="small">Predicted volume of meals — Mon to Sun</p>
+                            <div class="chart" id="demandChart" style="position: relative;">
+                                <div id="chartEmpty" style="width:100%;text-align:center;color:#94a3b8;font-size:12px;padding:60px 0 40px;">
+                                    No prediction data yet
+                                </div>
+                            </div>
+                            <div id="chartTooltip" style="display:none;position:fixed;background:#0f172a;color:#fff;padding:5px 10px;border-radius:6px;font-size:12px;font-weight:600;pointer-events:none;z-index:999;white-space:nowrap;"></div>
+                        </div>
+                        <div class="card">
+                            <h4 style="margin: 0; color: var(--primary)">7-Day Summary</h4>
+                            <p class="small">Based on predictions this week</p>
+                            <div id="chartSummary" style="margin-top: 16px; color: #94a3b8; font-size: 13px;">
+                                Loading...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer>
+                    <div>© 2026 Babcock University AI Food Management. Professional Administrative Interface.</div>
+                    <div style="display: flex; gap: 16px">
+                        <a href="#" style="color: var(--primary); text-decoration: none; font-weight: 700;">System Logs</a>
+                        <a href="#" style="color: var(--primary); text-decoration: none; font-weight: 700;">Technical Support</a>
+                    </div>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logout-modal-overlay" class="modal-overlay">
+        <div class="logout-modal">
+            <div style="font-size: 40px; margin-bottom: 16px;">👋</div>
+            <h3>Ready to Leave?</h3>
+            <p>Are you sure you want to sign out of your administrative account?</p>
+            <div class="modal-buttons">
+                <button class="btn-logout-cancel" id="cancel-logout">Stay Logged In</button>
+                <button class="btn-logout-confirm" id="confirm-logout">Yes, Sign Out</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/Dashboard.js"></script>
+</body>
+
+</html>
