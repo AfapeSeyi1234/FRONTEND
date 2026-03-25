@@ -114,7 +114,7 @@ class LoginSystem {
 
   handleSignUp(e) {
     e.preventDefault();
-    window.location.href = 'signup.html';
+    window.location.href = 'Signup.html';
   }
 
   handleForgotPassword(e) {
