@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const API      = "http://localhost:5000";
+  const API      = window.API_BASE_URL;
   let currentPage = 1;
   const PER_PAGE  = 10;
 

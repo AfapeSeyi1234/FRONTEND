@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         try {
-            const response = await fetch("http://localhost:5000/api/profile", {
+            const response = await fetch(`${window.API_BASE_URL}/api/profile`, {
                 credentials: "include"
             });
             if (!response.ok) throw new Error("Failed to fetch profile");
@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
 
         try {
-            const response = await fetch("http://localhost:5000/api/profile/update", {
+            const response = await fetch(`${window.API_BASE_URL}/api/profile/update`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
         btn.textContent = "Updating...";
 
         try {
-            const response = await fetch("http://localhost:5000/api/profile/password", {
+            const response = await fetch(`${window.API_BASE_URL}/api/profile/password`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
@@ -196,7 +196,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 pfpPreview.src = base64Avatar;
 
                 try {
-                    const response = await fetch("http://localhost:5000/api/profile/upload-avatar", {
+                    const response = await fetch(`${window.API_BASE_URL}/api/profile/upload-avatar`, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         credentials: "include",
@@ -227,7 +227,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("remove-photo").addEventListener("click", async function () {
         const defaultAvatar = "images/profile.svg";
         try {
-            const response = await fetch("http://localhost:5000/api/profile/upload-avatar", {
+            const response = await fetch(`${window.API_BASE_URL}/api/profile/upload-avatar`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
@@ -275,7 +275,7 @@ document.addEventListener("DOMContentLoaded", function () {
         this.textContent = "Signing out...";
 
         try {
-            await fetch("http://localhost:5000/api/logout", {
+            await fetch(`${window.API_BASE_URL}/api/logout`, {
                 method: "POST",
                 credentials: "include"
             });
