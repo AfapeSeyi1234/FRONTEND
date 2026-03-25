@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const API = "http://localhost:5000";
+  const API = window.API_BASE_URL;
 
   const sidebarAvatar = document.getElementById("sidebar-avatar");
   const sidebarName   = document.getElementById("sidebar-name");

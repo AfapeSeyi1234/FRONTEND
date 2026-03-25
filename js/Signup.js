@@ -96,7 +96,7 @@ class SignupSystem {
         signupBtn.querySelector(".btn-loading").classList.remove("hidden");
 
         try {
-            const response = await fetch("http://localhost:5000/api/signup", {
+            const response = await fetch(`${window.API_BASE_URL}/api/signup`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
