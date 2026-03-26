@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const sidebarName   = document.getElementById("sidebar-name");
   const sidebarDept   = document.getElementById("sidebar-department");
   const logoutBtn     = document.getElementById("logout-btn");
+  const welcomeText   = document.getElementById("welcome-text");
 
   // ── Auth + sidebar (original logic) ──────────────────────────────────────
   async function initDashboard() {
@@ -21,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (user.avatar) sidebarAvatar.src = user.avatar;
         sidebarName.textContent = `${user.first_name} ${user.last_name}`;
         sidebarDept.textContent = user.department.replace(/-/g, " ").toUpperCase();
+        if (welcomeText) welcomeText.textContent = `Welcome, ${user.first_name}`;
       } catch (e) { console.error("Cache parse error", e); }
     }
 
@@ -32,6 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (user.avatar) sidebarAvatar.src = user.avatar;
       sidebarName.textContent = `${user.first_name} ${user.last_name}`;
       sidebarDept.textContent = user.department.replace(/-/g, " ").toUpperCase();
+      if (welcomeText) welcomeText.textContent = `Welcome, ${user.first_name}`;
     } catch (error) {
       console.error("Auth error:", error);
       if (!localStorage.getItem("userProfile")) {
