@@ -6,123 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Predict Demand - Babcock Cafeteria</title>
   <link rel="stylesheet" href="css/PredictDemand.css">
-  <style>
-    /* ── Button fix ───────────────────────────────────── */
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-    }
-
-    .btn-row {
-      margin-top: 24px;
-      display: flex;
-      justify-content: flex-end;
-    }
-
-    .btn {
-      padding: 12px 32px;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 15px;
-      cursor: pointer;
-      border: none;
-      transition: opacity 0.2s, transform 0.15s;
-    }
-
-    .btn:active { transform: scale(0.97); }
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-    .btn-primary {
-      background: var(--primary);
-      color: #fff;
-    }
-
-    .btn-secondary {
-      background: var(--secondary, #d4b635);
-      color: #0f172a;
-    }
-
-    /* ── Locked section ──────────────────────────────── */
-    .locked-section {
-      position: relative;
-      pointer-events: none;
-      opacity: 0.45;
-      filter: grayscale(0.3);
-      transition: opacity 0.4s, filter 0.4s;
-    }
-
-    .locked-section.unlocked {
-      pointer-events: auto;
-      opacity: 1;
-      filter: none;
-    }
-
-    .lock-overlay {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-      border-radius: inherit;
-      background: rgba(255,255,255,0.45);
-      backdrop-filter: blur(1px);
-    }
-
-    .lock-overlay.hidden { display: none; }
-
-    .lock-pill {
-      background: #f1f5f9;
-      border: 1.5px solid #cbd5e1;
-      border-radius: 999px;
-      padding: 10px 22px;
-      font-size: 13px;
-      font-weight: 600;
-      color: #475569;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-    .retrain-banner {
-      display: none;
-      align-items: center;
-      gap: 10px;
-      background: #f0fdf4;
-      border: 1.5px solid #bbf7d0;
-      border-radius: 10px;
-      padding: 12px 18px;
-      font-size: 14px;
-      color: #166534;
-      margin-top: 16px;
-    }
-
-    .retrain-banner.show { display: flex; }
-
-    /* ── Status messages ──────────────────────────────── */
-    .form-msg {
-      font-size: 13px;
-      margin-top: 8px;
-      padding: 8px 14px;
-      border-radius: 8px;
-      display: none;
-    }
-
-    .form-msg.error   { background:#fef2f2; color:#dc2626; display:block; }
-    .form-msg.success { background:#f0fdf4; color:#16a34a; display:block; }
-    .form-msg.loading { background:#eff6ff; color:#2563eb; display:block; }
-
-    /* ── Prediction results panel ────────────────────── */
-    .prediction-results {
-      display: none;  /* hidden until .show is added */
-    }
-    .prediction-results.show {
-      display: block !important;
-    }
-
-
-  </style>
+  <link rel="stylesheet" href="css/Sidebar.css">
+  
 </head>
 
 <body style="background: #fff; color: #0f172a">
@@ -138,11 +23,10 @@
         </h2>
       </div>
       <nav>
-        <a href="Dashboard.html"><img class="icon" src="images/dashboard.svg" alt="dashboard" /> Dashboard</a>
-        <a href="PredictDemand.html" class="active"><img class="icon" src="images/predict.svg" alt="predict" /> Predict Demand</a>
-        <a href="Reports.html"><img class="icon" src="images/reports.svg" alt="reports" /> View Reports</a>
-        <a href="#"><img class="icon" src="images/data.svg" alt="data" /> Manage Data</a>
-        <a href="Profile.html"><img class="icon" src="images/profile.svg" alt="profile" /> Profile</a>
+        <a href="Dashboard.html"><img class="icon" src="images/dashboard.svg" alt="dashboard" /> <span>Dashboard</span></a>
+        <a href="PredictDemand.html" class="active"><img class="icon" src="images/predict.svg" alt="predict" /> <span>Predict Demand</span></a>
+        <a href="Reports.html"><img class="icon" src="images/reports.svg" alt="reports" /> <span>View Reports</span></a>
+        <a href="Profile.html"><img class="icon" src="images/profile.svg" alt="profile" /> <span>Profile</span></a>
       </nav>
       <div class="profile">
         <div class="user">

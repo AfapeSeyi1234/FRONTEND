@@ -22,102 +22,29 @@ body {
     min-height: 100vh;
 }
 
-aside.sidebar {
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
-        Arial, sans-serif;
-    width: var(--sidebar-width);
-    background: var(--primary);
-    color: #fff;
-    padding: 28px 20px;
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    overflow: auto;
-    z-index: 30;
-}
 
-.brand {
-    text-align: center;
-    margin-bottom: 12px;
-}
 
-.logo {
-    width: 96px;
-    height: 96px;
-    background: #fff;
-    border-radius: 12px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-}
 
-.logo img {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-    border-radius: 8px;
-}
 
-.brand h2 {
-    margin: 12px 0 0;
-    color: #ffffff;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-align: center;
-}
 
-nav {
-    margin-top: 18px;
-    flex: 1;
-}
 
-nav a {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    padding: 10px 14px;
-    color: rgba(255, 255, 255, 0.9);
-    text-decoration: none;
-    border-radius: 8px;
-    margin-bottom: 6px;
-    transition: all 0.3s ease;
-}
 
-nav a:hover {
-    background: rgba(255, 255, 255, 0.15);
-    transform: translateX(4px);
-}
 
-nav a.active {
-    background: rgba(255, 255, 255, 0.06);
-    border-right: 4px solid var(--secondary);
-    font-weight: 600;
-}
 
-nav img.icon {
-    width: 22px;
-    height: 22px;
-    filter: brightness(0) invert(1);
-}
 
-.profile {
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding-top: 16px;
-}
 
-.profile .user {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.07);
-    padding: 8px;
-    border-radius: 12px;
-}
+
+
+
+
+
+
+
+
+
+
+
+
 
 main {
     flex: 1;
@@ -146,7 +73,7 @@ header {
     background: #fff;
     border: 1px solid #e0e7ff;
     border-radius: 12px;
-    overflow: hidden;
+    overflow-x: auto;
     margin-bottom: 24px;
 }
 
@@ -336,68 +263,25 @@ button.primary:hover {
         margin-top: 64px;
     }
 
-    aside.sidebar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 64px;
-        width: 100%;
-        flex-direction: row;
-        padding: 8px 12px;
-        align-items: center;
-    }
+    
 
-    .brand {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin: 0;
-    }
+    
 
-    .logo {
-        width: 40px;
-        height: 40px;
-    }
+    
 
-    .logo img {
-        width: 32px;
-        height: 32px;
-    }
+    
 
-    .brand h2 {
-        display: none;
-    }
+    
 
-    nav {
-        margin-top: 0;
-        margin-left: 20px;
-        display: flex;
-        gap: 4px;
-        overflow: auto;
-    }
+    
 
-    nav a {
-        margin-bottom: 0;
-        padding: 6px 10px;
-        font-size: 13px;
-        white-space: nowrap;
-    }
+    
 
-    nav a.active {
-        border-right: none;
-        border-bottom: 3px solid var(--secondary);
-        border-radius: 0;
-    }
+    
 
-    nav img.icon {
-        width: 18px;
-        height: 18px;
-    }
+    
 
-    .profile {
-        display: none;
-    }
+    
 
     header {
         padding: 0 16px;
@@ -410,5 +294,51 @@ button.primary:hover {
 
     .stats-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    
+    
+    
+}
+
+@media (max-width: 768px) {
+    .table-wrapper {
+        border: none;
+        background: transparent;
+    }
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+    thead {
+        display: none;
+    }
+    tr {
+        margin-bottom: 16px;
+        background: #fff;
+        border: 1px solid #e0e7ff;
+        border-radius: 12px;
+        padding: 8px 16px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: right;
+        border-bottom: 1px solid #f1f5f9;
+        padding: 10px 0;
+        font-size: 13px;
+    }
+    td:last-child {
+        border-bottom: none;
+    }
+    td::before {
+        content: attr(data-label);
+        font-weight: 700;
+        color: #64748b;
+        text-transform: uppercase;
+        font-size: 11px;
     }
 }

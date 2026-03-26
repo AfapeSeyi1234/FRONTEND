@@ -116,20 +116,20 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         tbody.innerHTML = data.records.map((r, i) => `
           <tr ${i % 2 === 1 ? 'style="background:#f8fafc"' : ''}>
-            <td>
+            <td data-label="Date">
               <div style="font-weight:700;">${formatDate(r.record_date)}</div>
               <div style="font-size:11px;color:#64748b;">${r.day_of_week || "—"}</div>
             </td>
-            <td>${mealBadge(r.meal_type)}</td>
-            <td style="font-weight:500;">${r.food_item || "—"}</td>
-            <td style="font-weight:700;color:var(--primary);font-size:1.05rem;">
+            <td data-label="Meal Type">${mealBadge(r.meal_type)}</td>
+            <td data-label="Food" style="font-weight:500;">${r.food_item || "—"}</td>
+            <td data-label="Expected" style="font-weight:700;color:var(--primary);font-size:1.05rem;">
               ${r.predicted_students != null ? r.predicted_students.toLocaleString() : "—"}
             </td>
-            <td style="font-weight:700;color:#166534;font-size:1.05rem;">
+            <td data-label="Actual" style="font-weight:700;color:#166534;font-size:1.05rem;">
               ${r.actual_students != null ? r.actual_students.toLocaleString() : 
                 '<span style="color:#94a3b8;font-style:italic;font-weight:400;">Pending</span>'}
             </td>
-            <td>${accuracyBadge(r.predicted_students, r.actual_students)}</td>
+            <td data-label="Accuracy">${accuracyBadge(r.predicted_students, r.actual_students)}</td>
           </tr>
         `).join("");
       }

@@ -125,105 +125,29 @@
       z-index: 1;
     }
 
-    aside.sidebar {
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      width: var(--sidebar-width);
-      background: var(--primary);
-      color: #fff;
-      padding: 28px 20px;
-      display: flex;
-      flex-direction: column;
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100vh;
-      overflow: auto;
-      z-index: 30;
-    }
+    
 
-    .brand {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      margin-bottom: 12px;
-    }
+    
 
-    .logo {
-      width: 96px;
-      height: 96px;
-      background: #fff;
-      border-radius: 12px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto;
-    }
+    
 
-    .logo img {
-      width: 80px;
-      height: 80px;
-      object-fit: contain;
-      border-radius: 8px;
-    }
+    
 
-    .brand h2 {
-      margin: 12px 0 0;
-      color: #ffffff;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-align: center;
-    }
+    
 
-    nav {
-      margin-top: 18px;
-      flex: 1;
-    }
+    
 
-    nav a {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      padding: 10px 14px;
-      color: rgba(255, 255, 255, 0.9);
-      text-decoration: none;
-      border-radius: 8px;
-      margin-bottom: 6px;
-      transition: all 0.3s ease;
-    }
+    
 
-    nav a:hover {
-      background: rgba(255, 255, 255, 0.15);
-      transform: translateX(4px);
-    }
+    
 
-    nav a.active {
-      background: rgba(255, 255, 255, 0.06);
-      border-right: 4px solid var(--secondary);
-      font-weight: 600;
-    }
+    
 
-    nav img.icon {
-      width: 22px;
-      height: 22px;
-      filter: brightness(0) invert(1);
-      flex-shrink: 0;
-    }
+    
 
-    .profile {
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding-top: 16px;
-    }
+    
 
-    .profile .user {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      background: rgba(0, 0, 0, 0.07);
-      padding: 8px;
-      border-radius: 12px;
-    }
+    
 
     main {
       flex: 1;
@@ -634,8 +558,8 @@
       font-style: italic;
     }
 
-    /* Tablet and larger */
-    @media (max-width: 1024px) {
+    /* Tablets and Phones */
+    @media (max-width: 900px) {
       .form-grid {
         grid-template-columns: 1fr;
       }
@@ -643,39 +567,15 @@
       .result-grid {
         grid-template-columns: 1fr;
       }
-    }
 
-    /* Tablets */
-    @media (max-width: 768px) {
-      :root {
-        --sidebar-width: 100%;
+      main {
+        margin-top: 64px;
+        margin-left: 0;
       }
 
-      aside.sidebar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 64px;
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        padding: 8px clamp(8px, 2vw, 12px);
-        align-items: center;
-        z-index: 30;
-      }
-
-      aside.sidebar .brand {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin: 0;
-        white-space: nowrap;
-      }
-
-      aside.sidebar .brand h2 {
-        font-size: clamp(9px, 1.5vw, 11px);
-        margin: 0;
+      header {
+        height: 60px;
+        padding: 0 clamp(12px, 3vw, 20px);
       }
 
       nav {
@@ -686,36 +586,7 @@
         margin-top: 0;
         flex: 1;
         max-width: 100%;
-      }
-
-      nav a {
-        padding: 6px 8px;
-        font-size: clamp(11px, 1.5vw, 12px);
-        white-space: nowrap;
-      }
-
-      main {
-        margin-top: 64px;
-      }
-
-      .logo {
-        width: 36px;
-        height: 36px;
-        flex-shrink: 0;
-      }
-
-      .logo img {
-        width: 32px;
-        height: 32px;
-      }
-
-      .profile {
-        display: none;
-      }
-
-      header {
-        height: 60px;
-        padding: 0 clamp(12px, 3vw, 20px);
+        justify-content: space-around;
       }
 
       .content {
@@ -750,17 +621,11 @@
         grid-template-columns: 1fr;
       }
 
-      nav a {
-        padding: 6px 8px;
-      }
+      
 
-      nav img.icon {
-        display: none;
-      }
+      
 
-      nav a span {
-        display: none;
-      }
+      
 
       .card {
         padding: clamp(12px, 3vw, 16px);
@@ -866,4 +731,125 @@
 
     .btn-logout-cancel:hover {
       background: #e2e8f0;
+    }
+
+/* Extracted Inline Styles */
+/* ── Button fix ───────────────────────────────────── */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    @media (max-width: 900px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .btn-row {
+      margin-top: 24px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      padding: 12px 32px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+
+    .btn:active { transform: scale(0.97); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: var(--secondary, #d4b635);
+      color: #0f172a;
+    }
+
+    /* ── Locked section ──────────────────────────────── */
+    .locked-section {
+      position: relative;
+      pointer-events: none;
+      opacity: 0.45;
+      filter: grayscale(0.3);
+      transition: opacity 0.4s, filter 0.4s;
+    }
+
+    .locked-section.unlocked {
+      pointer-events: auto;
+      opacity: 1;
+      filter: none;
+    }
+
+    .lock-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      border-radius: inherit;
+      background: rgba(255,255,255,0.45);
+      backdrop-filter: blur(1px);
+    }
+
+    .lock-overlay.hidden { display: none; }
+
+    .lock-pill {
+      background: #f1f5f9;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 999px;
+      padding: 10px 22px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .retrain-banner {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      background: #f0fdf4;
+      border: 1.5px solid #bbf7d0;
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-size: 14px;
+      color: #166534;
+      margin-top: 16px;
+    }
+
+    .retrain-banner.show { display: flex; }
+
+    /* ── Status messages ──────────────────────────────── */
+    .form-msg {
+      font-size: 13px;
+      margin-top: 8px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .form-msg.error   { background:#fef2f2; color:#dc2626; display:block; }
+    .form-msg.success { background:#f0fdf4; color:#16a34a; display:block; }
+    .form-msg.loading { background:#eff6ff; color:#2563eb; display:block; }
+
+    /* ── Prediction results panel ────────────────────── */
+    .prediction-results {
+      display: none;  /* hidden until .show is added */
+    }
+    .prediction-results.show {
+      display: block !important;
     }
